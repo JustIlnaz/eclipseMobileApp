@@ -1,4 +1,6 @@
+import 'package:eclipse_app/database/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -8,6 +10,9 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +47,7 @@ class _AuthPageState extends State<AuthPage> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: TextField(
+                controller: emailController,
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
                   filled: true,
@@ -71,6 +77,8 @@ class _AuthPageState extends State<AuthPage> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: TextField(
+                obscureText: true,
+                controller: passwordController,
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
                   filled: true,
@@ -100,7 +108,26 @@ class _AuthPageState extends State<AuthPage> {
                     Color.fromARGB(156, 27, 12, 34),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  if (emailController.text.isNotEmpty &&
+                      passwordController.text.isNotEmpty) {
+                    var user = await authService.sigIn(
+                      emailController.text,
+                      passwordController.text,
+                    );
+                  }
+
+                  if (user != null) {
+                    Navigator.popAndPushNamed(context, '/home');
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Пользователь не найден"),
+                        backgroundColor: Color.fromARGB(156, 27, 12, 34),
+                      ),
+                    );
+                  }
+                },
                 child: Text("Войти"),
               ),
             ),
@@ -118,7 +145,6 @@ class _AuthPageState extends State<AuthPage> {
                   child: Text(
                     "Зарегистрироваться",
                     style: TextStyle(fontSize: 15),
-                    
                   ),
                 ),
               ],

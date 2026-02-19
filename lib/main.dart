@@ -1,9 +1,9 @@
+import 'package:eclipse_app/home.dart';
 import 'package:eclipse_app/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:eclipse_app/auth.dart';
 import 'package:eclipse_app/loading.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
       initialRoute: '/',
-      routes: {'/': (context) => LoadingPage(),'/auth':(context)=> AuthPage(), '/registration': (context) => RegistrationPage() },
+      routes: {
+        '/': (context) => LoadingPage(),
+        '/auth': (context) => AuthPage(),
+        '/registration': (context) => RegistrationPage(),
+        '/home': (context) => HomePage(),
+      },
     );
   }
 }
