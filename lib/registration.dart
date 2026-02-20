@@ -1,4 +1,5 @@
 import 'package:eclipse_app/database/auth.dart';
+import 'package:eclipse_app/database/users/user_table.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController passController = TextEditingController();
   TextEditingController fullnameController = TextEditingController();
   AuthService authService = AuthService();
+  UserTable userTable = UserTable();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: TextField(
+                  controller: emailController,
                   cursorColor: Colors.white,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -94,6 +97,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: TextField(
+                  controller: passController,
                   obscureText: true,
                   cursorColor: Colors.white,
                   style: TextStyle(color: Colors.white),
@@ -132,6 +136,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: TextField(
+                  controller: fullnameController,
                   cursorColor: Colors.white,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -302,8 +307,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       );
                       if (user != null) {
                         // для таблицы Users в БД
-                        //
-                        //
+                        await userTable.addUserTable(
+                          fullnameController.text,
+                          emailController.text,
+                          passController.text,
+                          _selectedGender!,
+                          birthDateController.text,
+                          'avatar',
+                        );
+
                         Navigator.popAndPushNamed(context, '/home');
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
