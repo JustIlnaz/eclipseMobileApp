@@ -307,7 +307,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         passController.text,
                       );
                       if (user != null) {
-                        // для таблицы Users в БД
                         await userTable.addUserTable(
                           fullnameController.text,
                           emailController.text,

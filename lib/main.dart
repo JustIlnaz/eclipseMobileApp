@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         '/auth': (context) => AuthPage(),
         '/registration': (context) => RegistrationPage(),
         '/home': (context) => HomePage(),
-        'check': (context) =>  CheckPage(),
+        '/check': (context) =>  CheckPage(),
       },
     );
   }
