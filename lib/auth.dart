@@ -1,6 +1,7 @@
 import 'package:eclipse_app/database/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:eclipse_app/database/user.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -13,6 +14,7 @@ class _AuthPageState extends State<AuthPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   AuthService authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,18 +113,25 @@ class _AuthPageState extends State<AuthPage> {
                 onPressed: () async {
                   if (emailController.text.isNotEmpty &&
                       passwordController.text.isNotEmpty) {
-                    var user = await authService.sigIn(
+                    var user = await authService.signIn(
                       emailController.text,
                       passwordController.text,
                     );
-                  }
 
-                  if (user != null) {
-                    Navigator.popAndPushNamed(context, '/home');
+                    if (user != null) {
+                      Navigator.popAndPushNamed(context, '/home');
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Пользователь не найден"),
+                          backgroundColor: Color.fromARGB(156, 27, 12, 34),
+                        ),
+                      );
+                    }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text("Пользователь не найден"),
+                        content: Text("Заполните поля"),
                         backgroundColor: Color.fromARGB(156, 27, 12, 34),
                       ),
                     );
