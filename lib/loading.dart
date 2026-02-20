@@ -23,7 +23,7 @@ class _LoadingPageState extends State<LoadingPage> {
         styleTextUnderTheLoader: TextStyle(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         futureTask: timer,
-        nextPageParam: NextPageParam(navigateToRoute: '/auth'),
+        nextPageParam: NextPageParam(navigateToRoute: '/check'),
         image: Image.asset('images/background_logo.png', fit: BoxFit.cover),
         loaderColor: Colors.white,
       ),

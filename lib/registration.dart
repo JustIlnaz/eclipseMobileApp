@@ -1,6 +1,7 @@
 import 'package:eclipse_app/database/auth.dart';
 import 'package:eclipse_app/database/users/user_table.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -313,10 +314,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           passController.text,
                           _selectedGender!,
                           birthDateController.text,
-                          'avatar',
+                          '',
                         );
 
-                        Navigator.popAndPushNamed(context, '/home');
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool('isLoggedIn', true);
+                        Navigator.popAndPushNamed(context, '/');
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

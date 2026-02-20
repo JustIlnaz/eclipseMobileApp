@@ -1,3 +1,4 @@
+import 'package:eclipse_app/check.dart';
 import 'package:eclipse_app/home.dart';
 import 'package:eclipse_app/registration.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/auth': (context) => AuthPage(),
         '/registration': (context) => RegistrationPage(),
         '/home': (context) => HomePage(),
+        'check': (context) =>  CheckPage(),
       },
     );
   }

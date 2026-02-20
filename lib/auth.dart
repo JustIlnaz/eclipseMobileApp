@@ -1,5 +1,6 @@
 import 'package:eclipse_app/database/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -117,7 +118,9 @@ class _AuthPageState extends State<AuthPage> {
                     );
 
                     if (user != null) {
-                      Navigator.popAndPushNamed(context, '/home');
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setBool('isLoggedIn', true);
+                      Navigator.popAndPushNamed(context, '/');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
