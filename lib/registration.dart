@@ -1,3 +1,4 @@
+import 'package:eclipse_app/database/auth.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -9,7 +10,11 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   String? _selectedGender;
-  final TextEditingController _birthDateController = TextEditingController();
+  TextEditingController birthDateController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController fullnameController = TextEditingController();
+  AuthService authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +177,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextField(
-                          controller: _birthDateController,
+                          controller: birthDateController,
                           cursorColor: Colors.white,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
@@ -285,7 +290,31 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (emailController.text.isNotEmpty &&
+                        passController.text.isNotEmpty &&
+                        fullnameController.text.isNotEmpty &&
+                        birthDateController.text.isNotEmpty &&
+                        _selectedGender != null) {
+                      var user = await authService.signUp(
+                        emailController.text,
+                        passController.text,
+                      );
+                      if (user != null) {
+                        // для таблицы Users в БД
+                        //
+                        //
+                        Navigator.popAndPushNamed(context, '/home');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Заполните поля"),
+                            backgroundColor: Color.fromARGB(156, 27, 12, 34),
+                          ),
+                        );
+                      }
+                    } else {}
+                  },
                   child: Text(
                     "Зарегистрироваться",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

@@ -1,7 +1,5 @@
 import 'package:eclipse_app/database/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:eclipse_app/database/user.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
