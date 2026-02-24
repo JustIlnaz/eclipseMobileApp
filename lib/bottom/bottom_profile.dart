@@ -4,6 +4,7 @@ import 'package:eclipse_app/database/storage/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class BottomProfilePage extends StatefulWidget {
@@ -35,19 +36,19 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
   }
 
   Future<void> downloadUrl() async {
-  try {
-    final fileName = path.basename(_file!.path);
-    final image = Supabase.instance.client.storage
-        .from('storage')
-        .getPublicUrl(fileName);
+    try {
+      final fileName = path.basename(_file!.path);
+      final image = Supabase.instance.client.storage
+          .from('storage')
+          .getPublicUrl(fileName);
 
-    setState(() {
-      url = image;
-    });
-  } catch (e) {
-    return;
+      setState(() {
+        url = image;
+      });
+    } catch (e) {
+      return;
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,100 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [],
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.02,
+                alignment: Alignment.centerRight,
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.2,
+                width: MediaQuery.of(context).size.width * 0.4,
+                // Добавить с дока пользователей
+                child: CircleAvatar(backgroundImage: NetworkImage('')),
+              ),
+
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Text('Имя'),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: TextField(
+                  // controller: emailController,
+                  cursorColor: Colors.white,
+                  decoration: InputDecoration(
+                    filled: true,
+                    hintText: 'ФИО',
+                    fillColor: Colors.white10,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: BorderSide(color: Colors.white10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: BorderSide(color: Colors.white10),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Text('Почта'),
+              ),
+
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: TextField(
+                  // controller: emailController,
+                  cursorColor: Colors.white,
+                  decoration: InputDecoration(
+                    filled: true,
+                    hintText: 'Email',
+                    fillColor: Colors.white10,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: BorderSide(color: Colors.white10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: BorderSide(color: Colors.white10),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              Container(
+                alignment: Alignment.centerRight,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: InkWell(child: Text('Cменить пароль'), onTap: () {}),
+              ),
+
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
+              SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(
+                    const Color.fromRGBO(223, 213, 235, 100),
+                  ),
+                  foregroundColor: WidgetStatePropertyAll(
+                    Color.fromARGB(156, 27, 12, 34),
+                  ),
+                ),
+                onPressed: ()  {},
+                child: Text("Сохранить")
+                ,
+              ),
+            ),
+
+            ],
           ),
         ),
       ),
